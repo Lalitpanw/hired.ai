@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>hired.ai — Stop applying. Start getting hired.</title>
+<meta name="description" content="The AI career platform built for Product Managers. Resume AI, Interview Coach, Job Tracker, Salary AI and Community. Stop applying. Start getting hired."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #050507;
+  --bg1: #0a0a0e;
+  --bg2: #111116;
+  --bg3: #18181f;
+  --bg4: #22222c;
+  --green: #00c896;
+  --green-dim: rgba(0,200,150,0.08);
+  --green-border: rgba(0,200,150,0.2);
+  --text: #f0f0f5;
+  --text2: #8888a0;
+  --text3: #44445a;
+  --border: rgba(255,255,255,0.055);
+  --border2: rgba(255,255,255,0.09);
+  --r: 12px;
+  --r-lg: 20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE ─────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px;
+}
+
+/* ── GLOW ──────────────────────────────────────────────── */
+.glow-orb {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  filter: blur(120px); opacity: 0.12;
+}
+
+/* ── SCROLL ANIMATION ──────────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+.reveal-d5 { transition-delay: 0.5s; }
+
+/* ── NAV ───────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(5,5,7,0.75);
+  backdrop-filter: blur(24px) saturate(1.5);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--green);
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.logo-mark svg { width: 17px; height: 17px; }
+.logo-name {
+  font-size: 17px; font-weight: 800;
+  letter-spacing: -0.5px; color: var(--text);
+}
+.logo-name em { color: var(--green); font-style: normal; }
+
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a {
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  text-decoration: none; transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--text); }
+
+.nav-cta {
+  display: flex; align-items: center; gap: 12px;
+}
+.btn-nav {
+  font-family: inherit; font-size: 13px; font-weight: 700;
+  padding: 9px 20px; border-radius: var(--r);
+  border: none; cursor: pointer;
+  background: var(--green); color: #050507;
+  transition: opacity 0.15s, transform 0.15s;
+  letter-spacing: -0.2px;
+}
+.btn-nav:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-nav-ghost {
+  font-family: inherit; font-size: 13px; font-weight: 500;
+  padding: 9px 20px; border-radius: var(--r);
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--text2); cursor: pointer; transition: all 0.15s;
+}
+.btn-nav-ghost:hover { color: var(--text); border-color: var(--border2); }
+
+/* ── HERO ──────────────────────────────────────────────── */
+.hero {
+  position: relative; overflow: hidden;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 120px 24px 80px;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
+  padding: 7px 16px; border-radius: 100px;
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  color: var(--green); margin-bottom: 28px;
+  animation: fadeDown 0.6s ease both;
+}
+.badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+@keyframes fadeDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+
+.hero-title {
+  font-family: 'Lora', Georgia, serif;
+  font-size: clamp(44px, 7vw, 88px);
+  font-weight: 500; line-height: 1.08;
+  letter-spacing: -2px; margin-bottom: 20px;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.hero-title em { color: var(--green); font-style: italic; }
+.hero-title .line2 { display: block; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+.hero-sub {
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--text2); line-height: 1.7;
+  max-width: 520px; margin: 0 auto 40px;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+.hero-actions {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp 0.7s 0.3s ease both;
+  margin-bottom: 56px;
+}
+.btn-hero {
+  font-family: inherit; font-size: 15px; font-weight: 700;
+  padding: 14px 32px; border-radius: var(--r);
+  border: none; cursor: pointer;
+  background: var(--green); color: #050507;
+  transition: all 0.15s; letter-spacing: -0.3px;
+}
+.btn-hero:hover { opacity: 0.88; transform: translateY(-2px); }
+.btn-hero-ghost {
+  font-family: inherit; font-size: 15px; font-weight: 500;
+  padding: 14px 32px; border-radius: var(--r);
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--text2); cursor: pointer; transition: all 0.15s;
+}
+.btn-hero-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+/* Stats ticker */
+.hero-stats {
+  display: flex; gap: 0; justify-content: center;
+  border: 1px solid var(--border); border-radius: var(--r-lg);
+  overflow: hidden; background: var(--bg2);
+  animation: fadeUp 0.7s 0.4s ease both;
+}
+.stat-item {
+  padding: 20px 36px; text-align: center;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-n {
+  font-family: 'Lora', serif;
+  font-size: 28px; font-weight: 500;
+  color: var(--text); line-height: 1;
+}
+.stat-n em { color: var(--green); font-style: normal; }
+.stat-l { font-size: 11px; color: var(--text3); margin-top: 4px; letter-spacing: 0.5px; }
+
+/* ── MARQUEE ───────────────────────────────────────────── */
+.marquee-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden; padding: 14px 0;
+  background: var(--bg1);
+}
+.marquee-track {
+  display: flex; gap: 0;
+  animation: marquee 28s linear infinite;
+  width: max-content;
+}
+.marquee-track:hover { animation-play-state: paused; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.marquee-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 32px; font-size: 13px;
+  color: var(--text3); font-weight: 500; white-space: nowrap;
+}
+.marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); }
+
+/* ── SECTION ───────────────────────────────────────────── */
+section { position: relative; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+.section-pad { padding: 96px 0; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--green);
+  margin-bottom: 14px;
+}
+.eyebrow::before {
+  content: ''; display: inline-block;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--green);
+}
+
+.section-heading {
+  font-family: 'Lora', serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 500; line-height: 1.15;
+  letter-spacing: -1px; margin-bottom: 16px;
+}
+.section-heading em { color: var(--green); font-style: italic; }
+
+.section-desc {
+  font-size: 16px; color: var(--text2); line-height: 1.7;
+  max-width: 480px;
+}
+
+/* ── FEATURES BENTO ────────────────────────────────────── */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  gap: 14px;
+  margin-top: 48px;
+}
+
+.bento-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px;
+  transition: border-color 0.2s, transform 0.2s;
+  overflow: hidden; position: relative;
+}
+.bento-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+}
+
+.bento-1 { grid-column: span 5; }
+.bento-2 { grid-column: span 7; }
+.bento-3 { grid-column: span 4; }
+.bento-4 { grid-column: span 4; }
+.bento-5 { grid-column: span 4; }
+.bento-6 { grid-column: span 7; }
+.bento-7 { grid-column: span 5; }
+
+.card-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 18px;
+}
+.card-title {
+  font-size: 17px; font-weight: 700;
+  letter-spacing: -0.3px; margin-bottom: 8px;
+}
+.card-desc { font-size: 13px; color: var(--text2); line-height: 1.65; }
+
+.card-tag {
+  display: inline-block; margin-top: 14px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; padding: 4px 10px;
+  border-radius: 100px;
+}
+.tag-live { background: var(--green-dim); color: var(--green); }
+.tag-soon { background: rgba(255,255,255,0.04); color: var(--text3); }
+.tag-hot { background: rgba(255,120,80,0.1); color: #ff7850; }
+
+/* Mock UI inside cards */
+.card-ui { margin-top: 20px; }
+.score-bar-wrap { display: flex; flex-direction: column; gap: 8px; }
+.score-row { display: flex; align-items: center; gap: 10px; }
+.score-label { font-size: 11px; color: var(--text3); width: 80px; flex-shrink: 0; }
+.score-track { flex: 1; height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+.score-fill { height: 100%; border-radius: 2px; background: var(--green); }
+.score-val { font-size: 11px; color: var(--text2); width: 28px; text-align: right; flex-shrink: 0; }
+
+.resume-preview {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px;
+}
+.rp-line { height: 6px; background: var(--bg4); border-radius: 3px; margin-bottom: 6px; }
+.rp-line.short { width: 60%; }
+.rp-line.medium { width: 80%; }
+.rp-line.full { width: 100%; }
+.rp-line.accent { background: rgba(0,200,150,0.25); width: 70%; }
+
+.job-items { display: flex; flex-direction: column; gap: 8px; }
+.job-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; background: var(--bg2);
+  border-radius: 8px; border: 1px solid var(--border);
+  font-size: 12px;
+}
+.job-item-left { display: flex; align-items: center; gap: 8px; }
+.job-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.job-name { color: var(--text2); }
+.job-status { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 100px; }
+
+/* ── COMMUNITY ─────────────────────────────────────────── */
+.community-section {
+  background: var(--bg1);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.community-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: center;
+  padding: 96px 0;
+}
+.comm-feature { display: flex; gap: 14px; margin-bottom: 20px; }
+.comm-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--green-dim); border: 1px solid var(--green-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.comm-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+.comm-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+.feed-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r-lg); overflow: hidden;
+}
+.feed-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.feed-title { font-size: 13px; font-weight: 600; }
+.feed-online { font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 5px; }
+.feed-online::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+.feed-post {
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.feed-post:hover { background: var(--bg3); }
+.feed-post:last-child { border-bottom: none; }
+.post-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.post-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+}
+.post-meta { font-size: 12px; }
+.post-name { font-weight: 600; color: var(--text); }
+.post-time { color: var(--text3); font-size: 11px; }
+.post-text { font-size: 13px; color: var(--text2); line-height: 1.55; }
+.post-reaction { margin-top: 8px; font-size: 11px; color: var(--text3); }
+
+/* ── PRICING ───────────────────────────────────────────── */
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin-top: 48px;
+}
+.price-card {
+  background: var(--bg1); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 28px;
+  transition: transform 0.2s;
+}
+.price-card:hover { transform: translateY(-3px); }
+.price-card.featured {
+  border-color: var(--green);
+  background: linear-gradient(160deg, #051a13 0%, var(--bg1) 100%);
+}
+.price-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
+  background: var(--green-dim); color: var(--green);
+  display: inline-block; margin-bottom: 16px;
+}
+.price-name { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.price-amount {
+  font-family: 'Lora', serif;
+  font-size: 44px; font-weight: 500; color: var(--text);
+  line-height: 1; letter-spacing: -2px; margin-bottom: 4px;
+}
+.price-amount sup { font-size: 20px; letter-spacing: 0; vertical-align: top; margin-top: 8px; display: inline-block; }
+.price-period { font-size: 13px; color: var(--text3); margin-bottom: 24px; }
+.price-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+.price-features { display: flex; flex-direction: column; gap: 10px; }
+.pf-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text2); }
+.pf-check {
+  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+  background: var(--green-dim); border: 1px solid var(--green-border);
+  display: flex; align-items: center; justify-content: center;
+}
+.pf-check svg { width: 9px; height: 9px; }
+.price-cta {
+  margin-top: 24px; width: 100%; padding: 12px;
+  border-radius: var(--r); font-family: inherit;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  transition: all 0.15s;
+}
+.price-cta.primary { background: var(--green); color: #050507; border: none; }
+.price-cta.primary:hover { opacity: 0.88; }
+.price-cta.ghost { background: transparent; color: var(--text2); border: 1px solid var(--border2); }
+.price-cta.ghost:hover { color: var(--text); border-color: var(--border2); }
+
+/* ── WAITLIST ──────────────────────────────────────────── */
+.waitlist-section {
+  padding: 96px 24px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.waitlist-box { max-width: 520px; margin: 0 auto; position: relative; z-index: 1; }
+.waitlist-heading {
+  font-family: 'Lora', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 500; line-height: 1.15;
+  letter-spacing: -1px; margin-bottom: 12px;
+}
+.waitlist-heading em { color: var(--green); font-style: italic; }
+.waitlist-sub { font-size: 15px; color: var(--text2); margin-bottom: 32px; line-height: 1.6; }
+.waitlist-form {
+  display: flex; gap: 8px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--r); padding: 6px;
+}
+.waitlist-input {
+  flex: 1; background: transparent; border: none;
+  padding: 10px 12px; color: var(--text);
+  font-family: inherit; font-size: 14px; outline: none;
+}
+.waitlist-input::placeholder { color: var(--text3); }
+.waitlist-btn {
+  font-family: inherit; font-size: 13px; font-weight: 700;
+  padding: 10px 20px; border-radius: 8px;
+  background: var(--green); color: #050507; border: none;
+  cursor: pointer; transition: opacity 0.15s; white-space: nowrap;
+}
+.waitlist-btn:hover { opacity: 0.88; }
+.waitlist-note { font-size: 12px; color: var(--text3); margin-top: 12px; }
+.waitlist-avatars { display: flex; justify-content: center; align-items: center; gap: 0; margin-bottom: 16px; }
+.wa {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 2px solid var(--bg); margin-left: -8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+}
+.wa:first-child { margin-left: 0; }
+.wa-count { font-size: 13px; color: var(--text2); margin-left: 12px; font-weight: 600; }
+
+/* ── FOOTER ────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-logo { font-size: 16px; font-weight: 800; letter-spacing: -0.5px; }
+.footer-logo em { color: var(--green); font-style: normal; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 13px; color: var(--text3); text-decoration: none; transition: color 0.15s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { font-size: 12px; color: var(--text3); }
+.footer-slogan { font-size: 12px; color: var(--text3); font-style: italic; }
+
+/* ── RESPONSIVE ────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .bento-1,.bento-2,.bento-3,.bento-4,.bento-5,.bento-6,.bento-7 { grid-column: span 12; }
+  .community-grid { grid-template-columns: 1fr; gap: 40px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .hero-stats { flex-direction: column; gap: 0; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .stat-item:last-child { border-bottom: none; }
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 600px) {
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn-hero, .btn-hero-ghost { width: 100%; max-width: 280px; }
+  .waitlist-form { flex-direction: column; }
+  .waitlist-btn { width: 100%; padding: 13px; }
+  .container { padding: 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 8.5L6.5 12L14 5" stroke="#050507" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="logo-name">hired<em>.ai</em></span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#community">Community</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <div class="nav-cta">
+    <button class="btn-nav-ghost">Sign in</button>
+    <button class="btn-nav" onclick="document.getElementById('waitlist-email').focus()">Get early access</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="glow-orb" style="width:600px;height:600px;top:-200px;left:50%;transform:translateX(-50%);background:#00c896;"></div>
+  <div class="glow-orb" style="width:300px;height:300px;bottom:0;right:10%;background:#0070ff;opacity:0.06;"></div>
+
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    Now in beta · Join 200+ PMs on the waitlist
+  </div>
+
+  <h1 class="hero-title">
+    Stop applying.<br>
+    <em class="line2">Start getting hired.</em>
+  </h1>
+
+  <p class="hero-sub">
+    The AI career platform built for Product Managers.<br>
+    Resume AI, Interview Coach, Job Tracker, Salary AI &amp; Community — all in one place.
+  </p>
+
+  <div class="hero-actions">
+    <button class="btn-hero" onclick="document.getElementById('waitlist-email').focus()">Get early access — free →</button>
+    <button class="btn-hero-ghost" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">See how it works</button>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-n">50<em>k+</em></div>
+      <div class="stat-l">PMs job hunting yearly</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">3–<em>6</em></div>
+      <div class="stat-l">Months avg PM job search</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n"><em>AI</em></div>
+      <div class="stat-l">Powered by Claude</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">₹<em>0</em></div>
+      <div class="stat-l">To get started today</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><div class="marquee-dot"></div>Resume AI</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Interview Coach</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Job Tracker</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Salary Negotiator</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>LinkedIn AI</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>PM Community</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Mock Interviews</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>ATS Optimizer</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Offer Comparison</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Peer Referrals</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Resume AI</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Interview Coach</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Job Tracker</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Salary Negotiator</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>LinkedIn AI</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>PM Community</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Mock Interviews</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>ATS Optimizer</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Offer Comparison</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Peer Referrals</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section-pad" id="features">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Platform modules</div>
+      <h2 class="section-heading">Everything you need<br>to land your <em>next role</em></h2>
+      <p class="section-desc">Six AI-powered modules working together — so you spend less time job hunting and more time interviewing.</p>
+    </div>
+
+    <div class="bento">
+
+      <div class="bento-card bento-1 reveal reveal-d1">
+        <div class="card-icon" style="background:rgba(0,200,150,0.1);">📄</div>
+        <div class="card-title">Resume AI</div>
+        <div class="card-desc">Paste any JD. AI rewrites your resume to match — keywords, structure, tone. Beat ATS filters every time.</div>
+        <div class="card-tag tag-live">Live now</div>
+        <div class="card-ui">
+          <div class="resume-preview">
+            <div class="rp-line short"></div>
+            <div class="rp-line accent"></div>
+            <div class="rp-line medium"></div>
+            <div class="rp-line full"></div>
+            <div class="rp-line short"></div>
+            <div class="rp-line medium"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-card bento-2 reveal reveal-d2">
+        <div class="card-icon" style="background:rgba(120,100,255,0.1);">🎤</div>
+        <div class="card-title">Interview AI</div>
+        <div class="card-desc">AI mock interviews tailored to your exact JD. Real-time scoring, keyword analysis, model answers and a readiness score after every session.</div>
+        <div class="card-tag tag-live">Live now</div>
+        <div class="card-ui">
+          <div class="score-bar-wrap">
+            <div class="score-row">
+              <div class="score-label">Behavioural</div>
+              <div class="score-track"><div class="score-fill" style="width:88%"></div></div>
+              <div class="score-val">88%</div>
+            </div>
+            <div class="score-row">
+              <div class="score-label">GenAI / LLM</div>
+              <div class="score-track"><div class="score-fill" style="width:72%"></div></div>
+              <div class="score-val">72%</div>
+            </div>
+            <div class="score-row">
+              <div class="score-label">Product</div>
+              <div class="score-track"><div class="score-fill" style="width:81%"></div></div>
+              <div class="score-val">81%</div>
+            </div>
+            <div class="score-row">
+              <div class="score-label">Technical</div>
+              <div class="score-track"><div class="score-fill" style="width:65%"></div></div>
+              <div class="score-val">65%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-card bento-3 reveal reveal-d1">
+        <div class="card-icon" style="background:rgba(0,120,255,0.1);">📊</div>
+        <div class="card-title">Job Tracker</div>
+        <div class="card-desc">Track every application, stage and follow-up. AI drafts your follow-up emails. Never miss an opportunity.</div>
+        <div class="card-tag tag-soon">Coming soon</div>
+        <div class="card-ui" style="margin-top:14px;">
+          <div class="job-items">
+            <div class="job-item">
+              <div class="job-item-left">
+                <div class="job-dot" style="background:#00c896;"></div>
+                <div class="job-name">Cars24 — GenAI PM</div>
+              </div>
+              <div class="job-status" style="background:rgba(0,200,150,0.1);color:#00c896;">Interview</div>
+            </div>
+            <div class="job-item">
+              <div class="job-item-left">
+                <div class="job-dot" style="background:#fbbf24;"></div>
+                <div class="job-name">Swiggy — Sr. PM</div>
+              </div>
+              <div class="job-status" style="background:rgba(251,191,36,0.1);color:#fbbf24;">Applied</div>
+            </div>
+            <div class="job-item">
+              <div class="job-item-left">
+                <div class="job-dot" style="background:#60a5fa;"></div>
+                <div class="job-name">Razorpay — PM II</div>
+              </div>
+              <div class="job-status" style="background:rgba(96,165,250,0.1);color:#60a5fa;">Screening</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-card bento-4 reveal reveal-d2">
+        <div class="card-icon" style="background:rgba(251,191,36,0.1);">💰</div>
+        <div class="card-title">Salary AI</div>
+        <div class="card-desc">Know your market worth. AI negotiation scripts. Compare offers side by side. Walk in confident.</div>
+        <div class="card-tag tag-soon">Coming soon</div>
+      </div>
+
+      <div class="bento-card bento-5 reveal reveal-d3">
+        <div class="card-icon" style="background:rgba(24,95,165,0.1);">🔗</div>
+        <div class="card-title">LinkedIn AI</div>
+        <div class="card-desc">AI rewrites your headline, summary and experience. Look hired before you are.</div>
+        <div class="card-tag tag-soon">Coming soon</div>
+      </div>
+
+      <div class="bento-card bento-6 reveal reveal-d1" style="border-color:var(--green-border);">
+        <div class="card-icon" style="background:var(--green-dim);">💬</div>
+        <div class="card-title">Community</div>
+        <div class="card-desc">PMs helping PMs. Peer mock interview pairing, anonymous salary data, job referrals, wins board. You are not alone in this search.</div>
+        <div class="card-tag tag-hot">Most loved</div>
+      </div>
+
+      <div class="bento-card bento-7 reveal reveal-d2" style="background:var(--green-dim);border-color:var(--green-border);">
+        <div style="font-size:13px;font-weight:700;color:var(--green);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:12px;">Built by a PM</div>
+        <div style="font-family:'Lora',serif;font-size:22px;line-height:1.4;letter-spacing:-0.5px;margin-bottom:16px;color:var(--text);">"I built the platform I wished existed when I was job hunting."</div>
+        <div style="font-size:13px;color:var(--text2);">Lalit Panwar · PM with 6+ years across Automotive, Fintech & Logistics</div>
+        <div style="margin-top:16px;display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:10px;padding:3px 8px;border-radius:100px;background:rgba(0,200,150,0.08);color:var(--green);font-weight:600;">CSPO Certified</span>
+          <span style="font-size:10px;padding:3px 8px;border-radius:100px;background:rgba(0,200,150,0.08);color:var(--green);font-weight:600;">NextLeap Fellow</span>
+          <span style="font-size:10px;padding:3px 8px;border-radius:100px;background:rgba(0,200,150,0.08);color:var(--green);font-weight:600;">GenAI Builder</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="community-section" id="community">
+  <div class="container">
+    <div class="community-grid">
+      <div class="reveal">
+        <div class="eyebrow">Community</div>
+        <h2 class="section-heading">PMs helping<br><em>PMs get hired</em></h2>
+        <p style="font-size:15px;color:var(--text2);line-height:1.7;margin-bottom:32px;">Job hunting is lonely. hired.ai gives you a community of PMs who've been where you are — and got through it.</p>
+        <div class="comm-feature">
+          <div class="comm-icon">🤝</div>
+          <div>
+            <div class="comm-title">Peer mock interviews</div>
+            <div class="comm-desc">Get matched with another PM for practice sessions. Real feedback from real people.</div>
+          </div>
+        </div>
+        <div class="comm-feature">
+          <div class="comm-icon">💸</div>
+          <div>
+            <div class="comm-title">Anonymous salary data</div>
+            <div class="comm-desc">See what PMs at Swiggy, Zepto, CRED and more are actually earning. No more guessing.</div>
+          </div>
+        </div>
+        <div class="comm-feature">
+          <div class="comm-icon">🔗</div>
+          <div>
+            <div class="comm-title">Job referrals</div>
+            <div class="comm-desc">PMs inside companies sharing open roles. Get referred before it's on Naukri.</div>
+          </div>
+        </div>
+        <div class="comm-feature">
+          <div class="comm-icon">🏆</div>
+          <div>
+            <div class="comm-title">Wins board</div>
+            <div class="comm-desc">Every offer, every milestone celebrated. The motivation you need on hard days.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div class="feed-card">
+          <div class="feed-header">
+            <div class="feed-title">Community feed</div>
+            <div class="feed-online">214 online now</div>
+          </div>
+          <div class="feed-post">
+            <div class="post-top">
+              <div class="post-avatar" style="background:rgba(0,200,150,0.15);color:#00c896;">RP</div>
+              <div class="post-meta">
+                <div class="post-name">Rahul P.</div>
+                <div class="post-time">2 hours ago · Wins Board 🏆</div>
+              </div>
+            </div>
+            <div class="post-text">Just got an offer from Swiggy as Senior PM! The Interview AI readiness score went from 54% to 83% in 2 weeks. This works 🔥</div>
+            <div class="post-reaction">❤️ 47 · 💬 12 replies</div>
+          </div>
+          <div class="feed-post">
+            <div class="post-top">
+              <div class="post-avatar" style="background:rgba(120,100,255,0.15);color:#a78bfa;">SK</div>
+              <div class="post-meta">
+                <div class="post-name">Sneha K.</div>
+                <div class="post-time">4 hours ago · Mock Interviews</div>
+              </div>
+            </div>
+            <div class="post-text">Anyone prepping for Cars24 GenAI PM round? Looking to pair up for mock interviews this weekend. DM me!</div>
+            <div class="post-reaction">👋 8 · 💬 5 replies</div>
+          </div>
+          <div class="feed-post">
+            <div class="post-top">
+              <div class="post-avatar" style="background:rgba(251,191,36,0.15);color:#fbbf24;">AM</div>
+              <div class="post-meta">
+                <div class="post-name">Arjun M.</div>
+                <div class="post-time">Yesterday · Salary Data</div>
+              </div>
+            </div>
+            <div class="post-text">Sharing my Zomato PM offer breakdown anonymously — CTC, ESOP, growth breakdown. See pinned post 👆</div>
+            <div class="post-reaction">🙏 89 · 💬 31 replies</div>
+          </div>
+          <div class="feed-post">
+            <div class="post-top">
+              <div class="post-avatar" style="background:rgba(96,165,250,0.15);color:#60a5fa;">NV</div>
+              <div class="post-meta">
+                <div class="post-name">Neha V.</div>
+                <div class="post-time">Yesterday · Referrals</div>
+              </div>
+            </div>
+            <div class="post-text">Meesho has 2 open PM roles — not posted publicly yet. I can refer. Drop your profile link in comments.</div>
+            <div class="post-reaction">🔥 124 · 💬 67 replies</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section-pad" id="pricing">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">Pricing</div>
+      <h2 class="section-heading" style="margin-bottom:8px;">Simple. Honest.<br><em>Affordable.</em></h2>
+      <p class="section-desc" style="margin:0 auto;">One-time or monthly — no hidden fees, no dark patterns. Cancel anytime.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card reveal reveal-d1">
+        <div class="price-name">Free</div>
+        <div class="price-amount"><sup></sup>₹0</div>
+        <div class="price-period">forever free</div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>2 mock interviews</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>1 resume rewrite</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Community access</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Job tracker (5 jobs)</div>
+        </div>
+        <button class="price-cta ghost">Get started free</button>
+      </div>
+
+      <div class="price-card featured reveal reveal-d2">
+        <div class="price-badge">Most popular</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount"><sup>₹</sup>999</div>
+        <div class="price-period">per month · cancel anytime</div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Unlimited mock interviews</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Unlimited resume rewrites</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Full job tracker</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Salary AI + LinkedIn AI</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Priority community access</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Session history + analytics</div>
+        </div>
+        <button class="price-cta primary">Start Pro — ₹999/mo</button>
+      </div>
+
+      <div class="price-card reveal reveal-d3">
+        <div class="price-name">Lifetime</div>
+        <div class="price-amount"><sup>₹</sup>4,999</div>
+        <div class="price-period">pay once · yours forever</div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Everything in Pro</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Pay once, use forever</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Early access to new features</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Founding member badge</div>
+          <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Direct founder access</div>
+        </div>
+        <button class="price-cta ghost">Get Lifetime access</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist-section">
+  <div class="glow-orb" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);background:#00c896;opacity:0.08;filter:blur(100px);"></div>
+  <div class="waitlist-box reveal">
+    <div class="eyebrow" style="justify-content:center;">Early access</div>
+    <h2 class="waitlist-heading">Join the waitlist.<br><em>First 100 get Pro free.</em></h2>
+    <p class="waitlist-sub">No spam ever. Just early access, product updates and PM career tips from the founder.</p>
+    <div class="waitlist-avatars">
+      <div class="wa" style="background:rgba(0,200,150,0.15);color:#00c896;">RP</div>
+      <div class="wa" style="background:rgba(120,100,255,0.15);color:#a78bfa;">SK</div>
+      <div class="wa" style="background:rgba(251,191,36,0.15);color:#fbbf24;">AM</div>
+      <div class="wa" style="background:rgba(96,165,250,0.15);color:#60a5fa;">NV</div>
+      <div class="wa" style="background:rgba(248,113,113,0.15);color:#f87171;">+</div>
+      <span class="wa-count">200+ PMs already waiting</span>
+    </div>
+    <div class="waitlist-form">
+      <input class="waitlist-input" id="waitlist-email" type="email" placeholder="your@email.com"/>
+      <button class="waitlist-btn" onclick="joinWaitlist()">Join waitlist →</button>
+    </div>
+    <div class="waitlist-note" id="waitlist-msg">Free forever plan included. No credit card required.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">hired<em>.ai</em></div>
+  <div class="footer-links">
+    <a href="#">Features</a>
+    <a href="#">Pricing</a>
+    <a href="#">Community</a>
+    <a href="#">WhatsApp</a>
+    <a href="#">LinkedIn</a>
+  </div>
+  <div class="footer-slogan">Stop applying. Start getting hired.</div>
+  <div class="footer-copy">© 2026 hired.ai · Built by a PM, for PMs</div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Waitlist
+function joinWaitlist() {
+  const input = document.getElementById('waitlist-email');
+  const msg = document.getElementById('waitlist-msg');
+  const email = input.value.trim();
+  if (!email || !email.includes('@')) {
+    msg.style.color = '#f87171';
+    msg.textContent = 'Please enter a valid email address.';
+    return;
+  }
+  msg.style.color = '#00c896';
+  msg.textContent = '🎉 You\'re on the list! We\'ll be in touch soon.';
+  input.value = '';
+  input.disabled = true;
+  document.querySelector('.waitlist-btn').disabled = true;
+  document.querySelector('.waitlist-btn').textContent = 'Joined ✓';
+  document.querySelector('.waitlist-btn').style.opacity = '0.6';
+}
+
+// Enter key on waitlist
+document.getElementById('waitlist-email').addEventListener('keydown', e => {
+  if (e.key === 'Enter') joinWaitlist();
+});
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.background =
+    window.scrollY > 40 ? 'rgba(5,5,7,0.95)' : 'rgba(5,5,7,0.75)';
+});
+</script>
+</body>
+</html>
