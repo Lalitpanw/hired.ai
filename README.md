@@ -11,12 +11,12 @@ land their next role faster - with less stress and more confidence.
 
 ## Features
 
-- 🎤 **Interview AI** — Mock interviews tailored to any JD. Real-time scoring + feedback
-- 📄 **Resume AI** — AI rewrites your resume to match any job description
-- 📊 **Job Tracker** — Track every application, stage and follow-up
-- 💰 **Salary AI** — Know your worth. Negotiate with confidence
-- 🔗 **LinkedIn AI** — Look hired before you are
-- 💬 **Community** — PMs helping PMs get hired
+- Interview AI — Mock interviews tailored to any JD. Real-time scoring + feedback
+- Resume AI— AI rewrites your resume to match any job description
+- Job Tracker — Track every application, stage and follow-up
+- Salary AI — Know your worth. Negotiate with confidence
+- LinkedIn AI — Look hired before you are
+- Community — PMs helping PMs get hired
 
 ## Built by
 
