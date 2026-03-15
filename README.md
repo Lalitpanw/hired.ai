@@ -1,39 +1,46 @@
-# hired.ai
+# hired.ai 🟢
 
 > Stop applying. Start getting hired.
 
 The AI career platform built for Product Managers.
 
-## What is hired.ai?
+## Stack
+- **Next.js 14** + TypeScript + Tailwind CSS
+- **Supabase** — Auth + Database
+- **Anthropic Claude** — AI (Interview + Resume)
+- **Razorpay** — INR Payments
+- **Resend** — Transactional Email
+- **Framer Motion** — Animations
+- **Vercel / Netlify** — Hosting
 
-hired.ai is an AI-powered career platform that helps Product Managers 
-land their next role faster - with less stress and more confidence.
+## Setup
 
-## Features
+```bash
+# 1. Install
+npm install
 
-- Interview AI — Mock interviews tailored to any JD. Real-time scoring + feedback
-- Resume AI— AI rewrites your resume to match any job description
-- Job Tracker — Track every application, stage and follow-up
-- Salary AI — Know your worth. Negotiate with confidence
-- LinkedIn AI — Look hired before you are
-- Community — PMs helping PMs get hired
+# 2. Add env vars
+cp .env.local.example .env.local
+# Fill in your API keys
 
-## Built by
+# 3. Run Supabase schema
+# Copy supabase-schema.sql into Supabase SQL editor
 
-Lalit Panwar — PM with 6+ years across Automotive, Fintech & Logistics  
-CSPO Certified · NextLeap Fellow · GenAI Builder
-
-## Status
-
-🚧 Currently in beta — join the waitlist at hired.ai
-
----
-
-*Built by a PM. For PMs. Powered by Claude AI.*
+# 4. Run
+npm run dev
 ```
 
----
+## Modules
+- 🎤 Interview AI — Mock interviews + AI scoring
+- 📄 Resume AI — JD-matched resume rewriter
+- 📊 Job Tracker — Application pipeline
+- 💰 Salary AI — Negotiation scripts
+- 🔗 LinkedIn AI — Profile optimizer
+- 💬 Community — PMs helping PMs
 
-**Topics/tags to add** (makes repo discoverable):
-```
-product-manager, ai, career, interview-prep, resume, job-search, nextjs, typescript, claude-ai
+## Pricing
+- Free — 2 interviews, 1 resume
+- Pro — ₹999/mo — unlimited everything
+- Lifetime — ₹4,999 — pay once forever
+
+Built by Lalit Panwar · PM · hired.ai
