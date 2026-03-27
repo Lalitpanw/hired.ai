@@ -27,9 +27,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
-
 body {
   font-family: 'Bricolage Grotesque', system-ui, sans-serif;
   background: var(--bg);
@@ -37,8 +35,6 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-
-/* ── NOISE TEXTURE ─────────────────────────────────────── */
 body::before {
   content: '';
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -47,14 +43,10 @@ body::before {
   background-repeat: repeat;
   background-size: 200px;
 }
-
-/* ── GLOW ──────────────────────────────────────────────── */
 .glow-orb {
   position: absolute; border-radius: 50%; pointer-events: none;
   filter: blur(120px); opacity: 0.12;
 }
-
-/* ── SCROLL ANIMATION ──────────────────────────────────── */
 .reveal {
   opacity: 0; transform: translateY(24px);
   transition: opacity 0.7s ease, transform 0.7s ease;
@@ -66,7 +58,6 @@ body::before {
 .reveal-d4 { transition-delay: 0.4s; }
 .reveal-d5 { transition-delay: 0.5s; }
 
-/* ── NAV ───────────────────────────────────────────────── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
@@ -76,7 +67,6 @@ nav {
   border-bottom: 1px solid var(--border);
   transition: background 0.3s;
 }
-
 .logo {
   display: flex; align-items: center; gap: 10px;
   text-decoration: none;
@@ -94,17 +84,13 @@ nav {
   letter-spacing: -0.5px; color: var(--text);
 }
 .logo-name em { color: var(--green); font-style: normal; }
-
 .nav-links { display: flex; align-items: center; gap: 32px; }
 .nav-links a {
   font-size: 13px; font-weight: 500; color: var(--text2);
   text-decoration: none; transition: color 0.15s;
 }
 .nav-links a:hover { color: var(--text); }
-
-.nav-cta {
-  display: flex; align-items: center; gap: 12px;
-}
+.nav-cta { display: flex; align-items: center; gap: 12px; }
 .btn-nav {
   font-family: inherit; font-size: 13px; font-weight: 700;
   padding: 9px 20px; border-radius: var(--r);
@@ -122,7 +108,6 @@ nav {
 }
 .btn-nav-ghost:hover { color: var(--text); border-color: var(--border2); }
 
-/* ── HERO ──────────────────────────────────────────────── */
 .hero {
   position: relative; overflow: hidden;
   min-height: 100vh;
@@ -131,7 +116,6 @@ nav {
   padding: 120px 24px 80px;
   text-align: center;
 }
-
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
@@ -148,7 +132,6 @@ nav {
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 @keyframes fadeDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
-
 .hero-title {
   font-family: 'Lora', Georgia, serif;
   font-size: clamp(44px, 7vw, 88px);
@@ -158,16 +141,13 @@ nav {
 }
 .hero-title em { color: var(--green); font-style: italic; }
 .hero-title .line2 { display: block; }
-
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-
 .hero-sub {
   font-size: clamp(15px, 2vw, 18px);
   color: var(--text2); line-height: 1.7;
   max-width: 520px; margin: 0 auto 40px;
   animation: fadeUp 0.7s 0.2s ease both;
 }
-
 .hero-actions {
   display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
   animation: fadeUp 0.7s 0.3s ease both;
@@ -188,8 +168,6 @@ nav {
   color: var(--text2); cursor: pointer; transition: all 0.15s;
 }
 .btn-hero-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
-
-/* Stats ticker */
 .hero-stats {
   display: flex; gap: 0; justify-content: center;
   border: 1px solid var(--border); border-radius: var(--r-lg);
@@ -209,7 +187,6 @@ nav {
 .stat-n em { color: var(--green); font-style: normal; }
 .stat-l { font-size: 11px; color: var(--text3); margin-top: 4px; letter-spacing: 0.5px; }
 
-/* ── MARQUEE ───────────────────────────────────────────── */
 .marquee-wrap {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
@@ -230,11 +207,9 @@ nav {
 }
 .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); }
 
-/* ── SECTION ───────────────────────────────────────────── */
 section { position: relative; }
 .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
 .section-pad { padding: 96px 0; }
-
 .eyebrow {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
@@ -246,7 +221,6 @@ section { position: relative; }
   width: 4px; height: 4px; border-radius: 50%;
   background: var(--green);
 }
-
 .section-heading {
   font-family: 'Lora', serif;
   font-size: clamp(28px, 4vw, 48px);
@@ -254,13 +228,11 @@ section { position: relative; }
   letter-spacing: -1px; margin-bottom: 16px;
 }
 .section-heading em { color: var(--green); font-style: italic; }
-
 .section-desc {
   font-size: 16px; color: var(--text2); line-height: 1.7;
   max-width: 480px;
 }
 
-/* ── FEATURES BENTO ────────────────────────────────────── */
 .bento {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -268,7 +240,6 @@ section { position: relative; }
   gap: 14px;
   margin-top: 48px;
 }
-
 .bento-card {
   background: var(--bg1);
   border: 1px solid var(--border);
@@ -281,7 +252,14 @@ section { position: relative; }
   border-color: var(--border2);
   transform: translateY(-2px);
 }
-
+/* FIX: live cards get pointer cursor and green hover border */
+.bento-card.clickable {
+  cursor: pointer;
+}
+.bento-card.clickable:hover {
+  border-color: var(--green-border);
+  transform: translateY(-3px);
+}
 .bento-1 { grid-column: span 5; }
 .bento-2 { grid-column: span 7; }
 .bento-3 { grid-column: span 4; }
@@ -289,18 +267,13 @@ section { position: relative; }
 .bento-5 { grid-column: span 4; }
 .bento-6 { grid-column: span 7; }
 .bento-7 { grid-column: span 5; }
-
 .card-icon {
   width: 44px; height: 44px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
   font-size: 20px; margin-bottom: 18px;
 }
-.card-title {
-  font-size: 17px; font-weight: 700;
-  letter-spacing: -0.3px; margin-bottom: 8px;
-}
+.card-title { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; }
 .card-desc { font-size: 13px; color: var(--text2); line-height: 1.65; }
-
 .card-tag {
   display: inline-block; margin-top: 14px;
   font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
@@ -310,8 +283,6 @@ section { position: relative; }
 .tag-live { background: var(--green-dim); color: var(--green); }
 .tag-soon { background: rgba(255,255,255,0.04); color: var(--text3); }
 .tag-hot { background: rgba(255,120,80,0.1); color: #ff7850; }
-
-/* Mock UI inside cards */
 .card-ui { margin-top: 20px; }
 .score-bar-wrap { display: flex; flex-direction: column; gap: 8px; }
 .score-row { display: flex; align-items: center; gap: 10px; }
@@ -319,7 +290,6 @@ section { position: relative; }
 .score-track { flex: 1; height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
 .score-fill { height: 100%; border-radius: 2px; background: var(--green); }
 .score-val { font-size: 11px; color: var(--text2); width: 28px; text-align: right; flex-shrink: 0; }
-
 .resume-preview {
   background: var(--bg2); border: 1px solid var(--border);
   border-radius: 8px; padding: 14px;
@@ -329,7 +299,6 @@ section { position: relative; }
 .rp-line.medium { width: 80%; }
 .rp-line.full { width: 100%; }
 .rp-line.accent { background: rgba(0,200,150,0.25); width: 70%; }
-
 .job-items { display: flex; flex-direction: column; gap: 8px; }
 .job-item {
   display: flex; align-items: center; justify-content: space-between;
@@ -342,7 +311,6 @@ section { position: relative; }
 .job-name { color: var(--text2); }
 .job-status { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 100px; }
 
-/* ── COMMUNITY ─────────────────────────────────────────── */
 .community-section {
   background: var(--bg1);
   border-top: 1px solid var(--border);
@@ -362,7 +330,6 @@ section { position: relative; }
 }
 .comm-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
 .comm-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
-
 .feed-card {
   background: var(--bg2); border: 1px solid var(--border);
   border-radius: var(--r-lg); overflow: hidden;
@@ -374,7 +341,6 @@ section { position: relative; }
 .feed-title { font-size: 13px; font-weight: 600; }
 .feed-online { font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 5px; }
 .feed-online::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
-
 .feed-post {
   padding: 16px 20px; border-bottom: 1px solid var(--border);
   transition: background 0.15s;
@@ -393,7 +359,6 @@ section { position: relative; }
 .post-text { font-size: 13px; color: var(--text2); line-height: 1.55; }
 .post-reaction { margin-top: 8px; font-size: 11px; color: var(--text3); }
 
-/* ── PRICING ───────────────────────────────────────────── */
 .pricing-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 16px; margin-top: 48px;
@@ -442,7 +407,6 @@ section { position: relative; }
 .price-cta.ghost { background: transparent; color: var(--text2); border: 1px solid var(--border2); }
 .price-cta.ghost:hover { color: var(--text); border-color: var(--border2); }
 
-/* ── WAITLIST ──────────────────────────────────────────── */
 .waitlist-section {
   padding: 96px 24px;
   text-align: center;
@@ -486,7 +450,6 @@ section { position: relative; }
 .wa:first-child { margin-left: 0; }
 .wa-count { font-size: 13px; color: var(--text2); margin-left: 12px; font-weight: 600; }
 
-/* ── FOOTER ────────────────────────────────────────────── */
 footer {
   border-top: 1px solid var(--border);
   padding: 40px;
@@ -501,7 +464,6 @@ footer {
 .footer-copy { font-size: 12px; color: var(--text3); }
 .footer-slogan { font-size: 12px; color: var(--text3); font-style: italic; }
 
-/* ── RESPONSIVE ────────────────────────────────────────── */
 @media (max-width: 900px) {
   .bento-1,.bento-2,.bento-3,.bento-4,.bento-5,.bento-6,.bento-7 { grid-column: span 12; }
   .community-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -524,6 +486,29 @@ footer {
 </head>
 <body>
 
+<!-- =====================================================
+     ⚙️  CONFIG — CHANGE THESE 3 URLS AND YOU'RE DONE
+     ===================================================== -->
+<script>
+  // 1. Your app URL — where Resume AI and Interview AI actually live
+  //    e.g. 'https://your-app.lovable.app' or 'https://app.hired.ai'
+  var APP_URL = 'https://YOUR_APP_URL_HERE';
+
+  // 2. Razorpay Payment Link for Pro plan (₹999/mo)
+  //    Create at: razorpay.com → Payment Links → + Create
+  var RAZORPAY_PRO = 'https://rzp.io/YOUR_PRO_LINK';
+
+  // 3. Razorpay Payment Link for Lifetime plan (₹4,999)
+  //    Create at: razorpay.com → Payment Links → + Create
+  var RAZORPAY_LIFETIME = 'https://rzp.io/YOUR_LIFETIME_LINK';
+
+  // 4. Your WhatsApp community invite link
+  var WHATSAPP_URL = 'https://chat.whatsapp.com/YOUR_INVITE_CODE';
+
+  // 5. Your LinkedIn profile URL
+  var LINKEDIN_URL = 'https://www.linkedin.com/in/lalitpanwar-cspo';
+</script>
+
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">
@@ -540,8 +525,10 @@ footer {
     <a href="#pricing">Pricing</a>
   </div>
   <div class="nav-cta">
-    <button class="btn-nav-ghost">Sign in</button>
-    <button class="btn-nav" onclick="document.getElementById('waitlist-email').focus()">Get early access</button>
+    <!-- FIX: Sign in now opens the app login page -->
+    <button class="btn-nav-ghost" onclick="window.open(APP_URL + '/login', '_blank')">Sign in</button>
+    <!-- FIX: Get early access scrolls to waitlist -->
+    <button class="btn-nav" onclick="document.getElementById('waitlist-email').focus(); document.getElementById('waitlist-email').scrollIntoView({behavior:'smooth', block:'center'})">Get early access</button>
   </div>
 </nav>
 
@@ -566,7 +553,8 @@ footer {
   </p>
 
   <div class="hero-actions">
-    <button class="btn-hero" onclick="document.getElementById('waitlist-email').focus()">Get early access — free →</button>
+    <!-- FIX: Goes to signup page in app -->
+    <button class="btn-hero" onclick="window.open(APP_URL + '/signup', '_blank')">Get early access — free →</button>
     <button class="btn-hero-ghost" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">See how it works</button>
   </div>
 
@@ -627,11 +615,12 @@ footer {
 
     <div class="bento">
 
-      <div class="bento-card bento-1 reveal reveal-d1">
+      <!-- FIX: Resume AI card is now clickable → opens app -->
+      <div class="bento-card bento-1 clickable reveal reveal-d1" onclick="window.open(APP_URL + '/resume', '_blank')" title="Open Resume AI">
         <div class="card-icon" style="background:rgba(0,200,150,0.1);">📄</div>
         <div class="card-title">Resume AI</div>
         <div class="card-desc">Paste any JD. AI rewrites your resume to match — keywords, structure, tone. Beat ATS filters every time.</div>
-        <div class="card-tag tag-live">Live now</div>
+        <div class="card-tag tag-live">Live now →</div>
         <div class="card-ui">
           <div class="resume-preview">
             <div class="rp-line short"></div>
@@ -644,11 +633,12 @@ footer {
         </div>
       </div>
 
-      <div class="bento-card bento-2 reveal reveal-d2">
+      <!-- FIX: Interview AI card is now clickable → opens app -->
+      <div class="bento-card bento-2 clickable reveal reveal-d2" onclick="window.open(APP_URL + '/interview', '_blank')" title="Open Interview AI">
         <div class="card-icon" style="background:rgba(120,100,255,0.1);">🎤</div>
         <div class="card-title">Interview AI</div>
         <div class="card-desc">AI mock interviews tailored to your exact JD. Real-time scoring, keyword analysis, model answers and a readiness score after every session.</div>
-        <div class="card-tag tag-live">Live now</div>
+        <div class="card-tag tag-live">Live now →</div>
         <div class="card-ui">
           <div class="score-bar-wrap">
             <div class="score-row">
@@ -731,7 +721,7 @@ footer {
       <div class="bento-card bento-7 reveal reveal-d2" style="background:var(--green-dim);border-color:var(--green-border);">
         <div style="font-size:13px;font-weight:700;color:var(--green);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:12px;">Built by a PM</div>
         <div style="font-family:'Lora',serif;font-size:22px;line-height:1.4;letter-spacing:-0.5px;margin-bottom:16px;color:var(--text);">"I built the platform I wished existed when I was job hunting."</div>
-        <div style="font-size:13px;color:var(--text2);">Lalit Panwar · PM with 6+ years across Automotive, Fintech & Logistics</div>
+        <div style="font-size:13px;color:var(--text2);">Lalit Panwar · PM with 4+ years across Automotive, Fintech &amp; Logistics</div>
         <div style="margin-top:16px;display:flex;gap:6px;flex-wrap:wrap;">
           <span style="font-size:10px;padding:3px 8px;border-radius:100px;background:rgba(0,200,150,0.08);color:var(--green);font-weight:600;">CSPO Certified</span>
           <span style="font-size:10px;padding:3px 8px;border-radius:100px;background:rgba(0,200,150,0.08);color:var(--green);font-weight:600;">NextLeap Fellow</span>
@@ -858,7 +848,8 @@ footer {
           <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Community access</div>
           <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Job tracker (5 jobs)</div>
         </div>
-        <button class="price-cta ghost">Get started free</button>
+        <!-- FIX: Goes to free signup in app -->
+        <button class="price-cta ghost" onclick="window.open(APP_URL + '/signup?plan=free', '_blank')">Get started free</button>
       </div>
 
       <div class="price-card featured reveal reveal-d2">
@@ -875,7 +866,8 @@ footer {
           <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Priority community access</div>
           <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Session history + analytics</div>
         </div>
-        <button class="price-cta primary">Start Pro — ₹999/mo</button>
+        <!-- FIX: Opens Razorpay Pro payment link -->
+        <button class="price-cta primary" onclick="window.open(RAZORPAY_PRO, '_blank')">Start Pro — ₹999/mo</button>
       </div>
 
       <div class="price-card reveal reveal-d3">
@@ -890,7 +882,8 @@ footer {
           <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Founding member badge</div>
           <div class="pf-item"><div class="pf-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/></svg></div>Direct founder access</div>
         </div>
-        <button class="price-cta ghost">Get Lifetime access</button>
+        <!-- FIX: Opens Razorpay Lifetime payment link -->
+        <button class="price-cta ghost" onclick="window.open(RAZORPAY_LIFETIME, '_blank')">Get Lifetime access</button>
       </div>
     </div>
   </div>
@@ -923,24 +916,25 @@ footer {
 <footer>
   <div class="footer-logo">hired<em>.ai</em></div>
   <div class="footer-links">
-    <a href="#">Features</a>
-    <a href="#">Pricing</a>
-    <a href="#">Community</a>
-    <a href="#">WhatsApp</a>
-    <a href="#">LinkedIn</a>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#community">Community</a>
+    <!-- FIX: WhatsApp and LinkedIn now use real URLs from config -->
+    <a href="#" onclick="window.open(WHATSAPP_URL, '_blank'); return false;">WhatsApp</a>
+    <a href="#" onclick="window.open(LINKEDIN_URL, '_blank'); return false;">LinkedIn</a>
   </div>
   <div class="footer-slogan">Stop applying. Start getting hired.</div>
   <div class="footer-copy">© 2026 hired.ai · Built by a PM, for PMs</div>
 </footer>
 
 <script>
-// Scroll reveal
+// ── Scroll reveal ─────────────────────────────────────────
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Waitlist
+// ── Waitlist form ─────────────────────────────────────────
 function joinWaitlist() {
   const input = document.getElementById('waitlist-email');
   const msg = document.getElementById('waitlist-msg');
@@ -959,12 +953,12 @@ function joinWaitlist() {
   document.querySelector('.waitlist-btn').style.opacity = '0.6';
 }
 
-// Enter key on waitlist
+// ── Enter key on waitlist ─────────────────────────────────
 document.getElementById('waitlist-email').addEventListener('keydown', e => {
   if (e.key === 'Enter') joinWaitlist();
 });
 
-// Nav scroll effect
+// ── Nav scroll effect ─────────────────────────────────────
 window.addEventListener('scroll', () => {
   document.querySelector('nav').style.background =
     window.scrollY > 40 ? 'rgba(5,5,7,0.95)' : 'rgba(5,5,7,0.75)';
